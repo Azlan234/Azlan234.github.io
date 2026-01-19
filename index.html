@@ -57,44 +57,73 @@
 }
 
 
-/* Animation styles */
+/* Typing animation (JS-driven) - responsive styles */
 #typing-animation {
-  position: relative;
-  font-size: 30px;
-  font-weight: bold;
-  color: rgb(255, 255, 255);
-  overflow: hidden;
-  white-space: nowrap;
-  animation: typing 3s steps(20, end) infinite;
+	display: inline-block;
+	font-size: 30px;
+	font-weight: 700;
+	color: #ffffff;
+	white-space: nowrap;
+	line-height: 1.1;
 }
 
-#typing-animation:before {
-  content: "";
-  /* position: absolute; */
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 100%;
-  background-color: #ccc;
-  animation: typing-cursor 0.5s ease-in-out infinite;
+/* Simple blinking cursor handled via ::after so JS typing text still works */
+#typing-animation::after {
+	content: '|';
+	display: inline-block;
+	margin-left: 6px;
+	animation: blink 1s steps(2, start) infinite;
+	color: #ffffff;
 }
 
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
+@keyframes blink {
+	0%, 50% { opacity: 1; }
+	51%, 100% { opacity: 0; }
 }
 
-@keyframes typing-cursor {
-  from {
-    width: 5px;
-  }
-  to {
-    width: 0;
-  }
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+	#typing-animation { font-size: 24px; }
+}
+
+@media (max-width: 575.98px) {
+	/* allow wrapping on very small screens and reduce size */
+	#typing-animation { font-size: 16px; white-space: normal; }
+	.one-forth { padding: 0.8rem; }
+}
+
+/* Additional global responsive tweaks */
+.navbar-brand { font-size: 1.25rem; }
+.navbar-toggler { border: none; }
+
+@media (max-width: 991.98px) {
+	.navbar-brand { font-size: 1.1rem; }
+}
+
+@media (max-width: 575.98px) {
+	.navbar-collapse { background: rgba(0,0,0,0.03); padding: 0.5rem; }
+	.navbar-nav { text-align: center; }
+	.navbar-nav .nav-item { margin: .25rem 0; }
+	.one-third.js-fullheight { min-height: 200px; }
+	.about-img img { max-width: 100%; height: auto; display: block; margin: 0 auto 1rem; }
+	.about-info p, .about-info li { font-size: 0.95rem; }
+	.resume-wrap h2 { font-size: 1.05rem; }
+	.big, .big-2, .big-4 { font-size: 2.2rem; }
+	.underline { margin-bottom: 1rem; }
+	.block-20 { height: 180px !important; background-size: cover !important; }
+	.blog-entry .text { padding: .6rem 0; }
+	.ftco-footer .container { padding: 1.2rem; }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+	.block-20 { height: 200px !important; }
+	.one-third.js-fullheight { min-height: 240px; }
+	h1.mb-4.mt-3 { font-size: 1.8rem; }
+}
+
+/* Ensure progress bars stack nicely on small widths */
+@media (max-width: 767.98px) {
+	.skill-mf .progress { margin-bottom: .8rem; }
 }
 
 
@@ -107,6 +136,38 @@
 
 .zoom-effect:hover {
   transform: scale(1.1);
+}
+
+/* Layout responsiveness tweaks */
+.one-third.img {
+	background-size: cover;
+	background-position: center center;
+	width: 100%;
+	min-height: 320px;
+}
+
+.one-forth {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+/* Ensure hero text and image stack nicely on small screens */
+@media (max-width: 991.98px) {
+	.one-third.js-fullheight { min-height: 260px; }
+	.one-forth.d-flex { padding: 1rem 0; }
+	.home-slider .slider-item { padding: 2rem 0; }
+}
+
+@media (max-width: 575.98px) {
+	/* allow image to sit above text and reduce margins */
+	.row.d-md-flex.no-gutters.slider-text.align-items-end.justify-content-end {
+		display: block;
+	}
+	.one-third.js-fullheight { order: -1; }
+	.one-forth.d-flex { padding: 0.6rem; }
+	h1.mb-4.mt-3 { font-size: 1.6rem; }
+	.subheading { font-size: 0.9rem; }
+	.btn { padding: 0.5rem 0.7rem; font-size: 0.9rem; }
 }
 
 
@@ -163,7 +224,7 @@
 						'Frontend Dev  ',
 						'Computer Science Graduate  ',
 						];
-
+							
 						// Create a function to display the typing animation for a given text
 						function playTypingAnimation(text) {
 						// Loop through each character and add it to the element
